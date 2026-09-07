@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Studio Dashboard — Angel's Treat Admin</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+<!-- ================= LOGIN SCREEN ================= -->
+<div id="loginScreen">
+  <div class="login-card">
+    <p class="login-mark">Angel's <span>Treat</span></p>
+    <p class="login-sub">STUDIO MANAGEMENT DASHBOARD</p>
+    <form id="loginForm">
+      <div class="login-field">
+        <label for="loginEmail">Email</label>
+        <input type="email" id="loginEmail" placeholder="admin@beautystudio.com" required>
+      </div>
+      <div class="login-field">
+        <label for="loginPassword">Password</label>
+        <input type="password" id="loginPassword" placeholder="••••••••" required>
+      </div>
+      <p class="login-error" id="loginError">Invalid email or password. Please try again.</p>
+      <button type="submit" class="a-btn a-btn-primary" style="width:100%; justify-content:center; padding:13px;">Sign In</button>
+    </form>
+    <!-- <p class="login-hint">Demo credentials — admin@beautystudio.com / admin123<br> -->
+    <!-- TODO: Replace demo authentication with secure server-side authentication. --></p>
+  </div>
+</div>
+
+<!-- ================= ADMIN APP ================= -->
+<div id="adminApp">
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">Angel's <span>Treat</span></div>
+    <nav class="side-nav" id="sideNav">
+      <button data-page="overview" class="active"><span class="ico">◆</span> Overview</button>
+      <button data-page="appointments"><span class="ico">▤</span> Appointments</button>
+      <button data-page="calendar"><span class="ico">▦</span> Calendar</button>
+      <button data-page="clients"><span class="ico">◈</span> Clients</button>
+      <button data-page="activity"><span class="ico">✎</span> Activity Log</button>
+      <button data-page="analytics"><span class="ico">◫</span> Analytics</button>
+      <button data-page="services"><span class="ico">✦</span> Services</button>
+      <button data-page="gallery"><span class="ico">▧</span> Gallery</button>
+      <button data-page="settings"><span class="ico">⚙</span> Settings</button>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="logout-btn" id="logoutBtn"><span class="ico">⏻</span> Log Out</button>
+    </div>
+  </aside>
+
+  <div class="main">
+    <!-- Topbar -->
+    <header class="topbar">
+      <div style="display:flex; align-items:center; gap:16px;">
+        <button class="drawer-toggle" id="drawerToggle" aria-label="Open menu">☰</button>
+        <h1 class="topbar-title" id="pageTitle">Overview</h1>
+      </div>
+      <div class="topbar-right" style="position:relative;">
+        <button class="icon-btn-a" id="notifBtn" aria-label="Notifications">
+          🔔<span class="badge-dot" id="notifBadge" style="display:none;">0</span>
+        </button>
+        <div class="notif-dropdown" id="notifDropdown">
+          <div class="notif-head"><span>Notifications</span><button id="markAllRead">Mark all read</button></div>
+          <div id="notifList"></div>
+        </div>
+        <div class="admin-avatar">AT</div>
+      </div>
+    </header>
+
+    <!-- ============= OVERVIEW ============= -->
+    <section class="page active" id="page-overview">
+      <div class="page-head"><div><h1 style="display:none;"></h1><p>A snapshot of Angel's Treat's studio activity today.</p></div></div>
+
+      <div class="kpi-grid" id="kpiGrid"><!-- rendered by admin.js --></div>
+
+      <div class="panel-grid">
+        <div class="panel">
+          <div class="panel-head"><h3>Appointments Overview</h3><span style="font-size:11.5px; color:var(--text-dim);">Last 7 days</span></div>
+          <div class="bar-chart" id="apptChart"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3>Appointment Status</h3></div>
+          <div class="donut-wrap">
+            <svg width="140" height="140" viewBox="0 0 140 140" id="donutSvg"></svg>
+            <ul class="donut-legend" id="donutLegend"></ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-grid">
+        <div class="panel">
+          <div class="panel-head"><h3>Revenue Overview</h3><span style="font-size:11.5px; color:var(--text-dim);">Last 6 activities</span></div>
+          <div class="bar-chart" id="revenueChart"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3>Popular Services</h3></div>
+          <ul id="popularServices" style="display:flex; flex-direction:column; gap:14px;"></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============= APPOINTMENTS ============= -->
+    <section class="page" id="page-appointments">
+      <div class="page-head"><p>Manage all client bookings in one place.</p></div>
+      <div class="search-bar">
+        <input type="text" id="apptSearch" placeholder="Search by client name...">
+        <select id="apptStatusFilter">
+          <option value="all">All statuses</option>
+          <option value="Pending">Pending</option>
+          <option value="Confirmed">Confirmed</option>
+          <option value="Completed">Completed</option>
+          <option value="Cancelled">Cancelled</option>
+        </select>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Client</th><th>Service</th><th>Date</th><th>Time</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="apptTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============= CALENDAR ============= -->
+    <section class="page" id="page-calendar">
+      <div class="page-head"><p>Visual monthly view of all appointments.</p></div>
+      <div class="panel">
+        <div class="cal-head">
+          <h3 id="calMonthLabel"></h3>
+          <div class="cal-nav">
+            <button class="a-btn a-btn-sm" id="calPrev">‹ Prev</button>
+            <button class="a-btn a-btn-sm" id="calNext">Next ›</button>
+          </div>
+        </div>
+        <div class="cal-grid" id="calDow"></div>
+        <div class="cal-grid" id="calGrid" style="margin-top:8px;"></div>
+      </div>
+    </section>
+
+    <!-- ============= CLIENTS ============= -->
+    <section class="page" id="page-clients">
+      <div class="page-head"><p>Every client who has booked with the studio.</p></div>
+      <div class="search-bar"><input type="text" id="clientSearch" placeholder="Search clients..."></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Name</th><th>Phone</th><th>Email</th><th>Total Appointments</th><th>Last Appointment</th><th>Actions</th></tr></thead>
+          <tbody id="clientTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============= ACTIVITY LOG ============= -->
+    <section class="page" id="page-activity">
+      <div class="page-head">
+        <p>Log day-to-day business activity, revenue and expenses.</p>
+        <button class="a-btn a-btn-primary" id="addActivityBtn">+ Log Activity</button>
+      </div>
+      <div class="search-bar">
+        <input type="text" id="activitySearch" placeholder="Search activity...">
+        <input type="date" id="activityDateFilter">
+      </div>
+      <div class="panel"><div id="activityList"></div></div>
+    </section>
+
+    <!-- ============= ANALYTICS ============= -->
+    <section class="page" id="page-analytics">
+      <div class="page-head"><p>Business performance at a glance.</p></div>
+      <div class="chip-row" id="analyticsFilters">
+        <button class="chip" data-range="today">Today</button>
+        <button class="chip" data-range="week">This Week</button>
+        <button class="chip active" data-range="month">This Month</button>
+        <button class="chip" data-range="quarter">Last 3 Months</button>
+      </div>
+      <div class="kpi-grid" id="analyticsKpis" style="grid-template-columns:repeat(4,1fr);"></div>
+      <div class="panel-grid">
+        <div class="panel">
+          <div class="panel-head"><h3>Popular Services</h3></div>
+          <ul id="analyticsPopular" style="display:flex; flex-direction:column; gap:14px;"></ul>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3>Returning Clients</h3></div>
+          <ul id="returningClients" style="display:flex; flex-direction:column; gap:14px;"></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============= SERVICES MANAGEMENT ============= -->
+    <section class="page" id="page-services">
+      <div class="page-head">
+        <p>Add, edit or retire services offered at the studio.</p>
+        <button class="a-btn a-btn-primary" id="addServiceBtn">+ Add Service</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Service</th><th>Price</th><th>Duration</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="serviceTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============= GALLERY MANAGEMENT ============= -->
+    <section class="page" id="page-gallery">
+      <div class="page-head">
+        <p>Manage portfolio images shown on the public gallery.</p>
+        <button class="a-btn a-btn-primary" id="addGalleryBtn">+ Add Image</button>
+      </div>
+      <div class="gallery-admin-grid" id="galleryAdminGrid"></div>
+    </section>
+
+    <!-- ============= SETTINGS ============= -->
+    <section class="page" id="page-settings">
+      <div class="page-head"><p>Business information shown across the public site.</p></div>
+      <div class="panel" style="max-width:620px;">
+        <form id="settingsForm">
+          <div class="a-field-row">
+            <div class="a-field"><label>Business Name</label><input type="text" id="setName"></div>
+            <div class="a-field"><label>Phone</label><input type="text" id="setPhone"></div>
+          </div>
+          <div class="a-field-row">
+            <div class="a-field"><label>WhatsApp Number</label><input type="text" id="setWhatsapp"></div>
+            <div class="a-field"><label>Email</label><input type="email" id="setEmail"></div>
+          </div>
+          <div class="a-field"><label>Address</label><input type="text" id="setAddress"></div>
+          <div class="a-field"><label>Opening Hours</label><input type="text" id="setHours"></div>
+          <div class="a-field-row">
+            <div class="a-field"><label>Instagram</label><input type="text" id="setInstagram"></div>
+            <div class="a-field"><label>Facebook</label><input type="text" id="setFacebook"></div>
+          </div>
+          <div class="a-field"><label>TikTok</label><input type="text" id="setTiktok"></div>
+          <button type="submit" class="a-btn a-btn-primary">Save Changes</button>
+        </form>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<!-- ================= MODALS ================= -->
+
+<!-- Appointment detail modal -->
+<div class="a-modal-overlay" id="apptModal">
+  <div class="a-modal">
+    <button class="a-modal-close" data-close>✕</button>
+    <h3>Appointment Details</h3>
+    <div id="apptModalBody"></div>
+    <div class="a-modal-actions">
+      <button class="a-btn a-btn-sm" data-action="Confirmed">Confirm</button>
+      <button class="a-btn a-btn-sm" data-action="Completed">Complete</button>
+      <button class="a-btn a-btn-sm a-btn-danger" data-action="Cancelled">Cancel</button>
+      <button class="a-btn a-btn-sm a-btn-danger" data-action="Delete">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- Client detail modal -->
+<div class="a-modal-overlay" id="clientModal">
+  <div class="a-modal">
+    <button class="a-modal-close" data-close>✕</button>
+    <h3>Client Details</h3>
+    <div id="clientModalBody"></div>
+  </div>
+</div>
+
+<!-- Activity form modal -->
+<div class="a-modal-overlay" id="activityModal">
+  <div class="a-modal">
+    <button class="a-modal-close" data-close>✕</button>
+    <h3>Log Business Activity</h3>
+    <form id="activityForm">
+      <div class="a-field"><label>Date</label><input type="date" id="actDate" required></div>
+      <div class="a-field">
+        <label>Activity Type</label>
+        <select id="actType"><option>Service</option><option>Expense</option><option>Note</option></select>
+      </div>
+      <div class="a-field"><label>Description</label><input type="text" id="actDesc" required></div>
+      <div class="a-field-row">
+        <div class="a-field"><label>Revenue (₦)</label><input type="number" id="actRevenue" value="0" min="0"></div>
+        <div class="a-field"><label>Expense (₦)</label><input type="number" id="actExpense" value="0" min="0"></div>
+      </div>
+      <div class="a-field"><label>Notes</label><textarea id="actNotes" rows="2"></textarea></div>
+      <button type="submit" class="a-btn a-btn-primary" style="width:100%; justify-content:center;">Save Activity</button>
+    </form>
+  </div>
+</div>
+
+<!-- Service form modal -->
+<div class="a-modal-overlay" id="serviceFormModal">
+  <div class="a-modal">
+    <button class="a-modal-close" data-close>✕</button>
+    <h3 id="serviceFormTitle">Add Service</h3>
+    <form id="serviceForm">
+      <input type="hidden" id="svcEditId">
+      <div class="a-field"><label>Service Name</label><input type="text" id="svcName" required></div>
+      <div class="a-field"><label>Description</label><input type="text" id="svcDesc" required></div>
+      <div class="a-field-row">
+        <div class="a-field"><label>Price (e.g. From ₦45,000)</label><input type="text" id="svcPrice" required></div>
+        <div class="a-field"><label>Duration (e.g. 60 mins)</label><input type="text" id="svcDuration" required></div>
+      </div>
+      <div class="a-field"><label>Image URL</label><input type="text" id="svcImg" required></div>
+      <div class="a-field" style="display:flex; align-items:center; justify-content:space-between;">
+        <label style="margin:0;">Enabled</label>
+        <label class="switch"><input type="checkbox" id="svcEnabled" checked><span class="slider"></span></label>
+      </div>
+      <button type="submit" class="a-btn a-btn-primary" style="width:100%; justify-content:center;">Save Service</button>
+    </form>
+  </div>
+</div>
+
+<!-- Gallery form modal -->
+<div class="a-modal-overlay" id="galleryFormModal">
+  <div class="a-modal">
+    <button class="a-modal-close" data-close>✕</button>
+    <h3>Add Gallery Image</h3>
+    <form id="galleryForm">
+      <div class="a-field"><label>Image URL</label><input type="text" id="galImg" required></div>
+      <div class="a-field">
+        <label>Category</label>
+        <select id="galCategory">
+          <option value="bridal">Bridal</option>
+          <option value="soft-glam">Soft Glam</option>
+          <option value="signature">Signature Glam</option>
+          <option value="events">Events</option>
+          <option value="photoshoot">Photoshoots</option>
+        </select>
+      </div>
+      <div class="a-field"><label>Caption</label><input type="text" id="galCaption" required></div>
+      <button type="submit" class="a-btn a-btn-primary" style="width:100%; justify-content:center;">Add Image</button>
+    </form>
+  </div>
+</div>
+
+<div id="a-toast-container"></div>
+
+<script src="js/admin.js"></script>
+</body>
+</html>
