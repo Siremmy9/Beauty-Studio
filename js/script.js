@@ -18,7 +18,7 @@ const STUDIO_CONFIG = {
   whatsappDefaultMessage: "Hello, I'd like to make an appointment.",
 };
 
-/* ---------- 2. DEMO DATA (mark clearly — remove/replace for production) ---------- */
+/* ---------- 2. DEMO DATA (mark clearly — remove/replace for production) time ---------- */
 // DEMO DATA START
 const SERVICES = [
   {
@@ -225,7 +225,7 @@ function genBookingRef() {
 
 /* ---------- 4. LOADER ---------- */
 window.addEventListener("load", () => {
-  setTimeout(() => $("#loader").classList.add("hidden"), 550);
+  setTimeout(() => $("#loader").classList.add("hidden"), 1000);
 });
 
 /* ---------- 5. NAVBAR ---------- */
