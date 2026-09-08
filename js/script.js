@@ -8,7 +8,7 @@
 /* ---------- 1. CONFIG ---------- */
 const STUDIO_CONFIG = {
   name: "Angel's Treat",
-  phone: "+2348000000000",
+  phone: "+2348141713798",
   whatsapp: "2348141713798", // digits only, no + , used for wa.me links
   email: "hello@angelstreat.com",
   address: "23 Seriki Balogun street, Bashorun Estate, Majek",
@@ -27,7 +27,7 @@ const SERVICES = [
     desc: "Luxury makeup for your most unforgettable day.",
     price: "From ₦120,000",
     duration: "120 mins",
-    img: "./assets/images/image3.jpg",
+    img: "./assets/images/finger.jpg",
     includes: [
       "Pre-wedding trial session",
       "Skin prep & long-wear base",
@@ -84,7 +84,7 @@ const SERVICES = [
     desc: "Look flawless for birthdays, dinners and celebrations.",
     price: "From ₦50,000",
     duration: "60 mins",
-    img: "./assets/images/image5.jpg",
+    img: "./assets/images/pro.jpg",
     includes: [
       "Skin prep & priming",
       "Full glam application",
@@ -98,7 +98,7 @@ const SERVICES = [
     desc: "Beautiful looks for Nigerian traditional events.",
     price: "From ₦90,000",
     duration: "100 mins",
-    img: "./assets/images/image3.jpg",
+    img: "./assets/images/fingers.jpg",
     includes: [
       "Bold, long-wear application",
       "Gele-ready base finish",
@@ -115,12 +115,12 @@ const GALLERY_ITEMS = [
     caption: "Bridal — Radiant Ivory",
   },
   {
-    src: "./assets/images/image6.jpg",
+    src: "./assets/images/pro.jpg",
     category: "signature",
     caption: "Signature Glam — Evening",
   },
   {
-    src: "./assets/images/image5.jpg",
+    src: "./assets/images/image6.jpg",
     category: "soft-glam",
     caption: "Soft Glam — Daytime",
   },
@@ -145,12 +145,12 @@ const GALLERY_ITEMS = [
     caption: "Soft Glam — Rose Nude",
   },
   {
-    src: "./assets/images/image3.jpg",
+    src: "./assets/images/nails1.jpg",
     category: "signature",
     caption: "Signature — Bold Lip",
   },
   {
-    src: "./assets/images/image2.jpg",
+    src: "./assets/images/nails2.jpg",
     category: "photoshoot",
     caption: "Editorial — Highlight",
   },
