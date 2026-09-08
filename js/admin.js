@@ -197,7 +197,7 @@ function renderPopularServices(bookings, target) {
     </li>`).join("") || `<p style="color:var(--text-dim); font-size:13px;">No bookings yet.</p>`;
 }
 
-/* ---------- 7. APPOINTMENTS ---------- */
+/* ---------- 7. APPOINTMENTS  whatsapp---------- */
 let apptFilterText = "", apptFilterStatus = "all";
 function renderAppointments() {
   const bookings = DB.get("ma_bookings");
@@ -559,7 +559,7 @@ $("#galleryAdminGrid")?.addEventListener("click", (e) => {
 /* ---------- 14. SETTINGS ---------- */
 function renderSettings() {
   const settings = DB.get("ma_settings", {
-    name: "Angel's Treat", phone: "+234 800 000 0000", whatsapp: "2348000000000", email: "hello@angelstreat.com",
+    name: "Angel's Treat", phone: "+234 800 000 0000", whatsapp: "08141713798", email: "hello@angelstreat.com",
     address: "14 Bourdillon Road, Ikoyi, Lagos, Nigeria", hours: "Tue – Sun, 9:00 AM – 7:00 PM",
     instagram: "https://instagram.com/angelstreat", facebook: "https://facebook.com/angelstreat", tiktok: "https://tiktok.com/@angelstreat"
   });
