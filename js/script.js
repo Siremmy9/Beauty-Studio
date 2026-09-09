@@ -9,7 +9,7 @@
 const STUDIO_CONFIG = {
   name: "Angel's Treat",
   phone: "+2348141713798",
-  whatsapp: "2348141713798", // digits only, no + , used for wa.me links
+  whatsapp: "2347088310321", // digits only, no + , used for wa.me links
   email: "hello@angelstreat.com",
   address: "23 Seriki Balogun street, Bashorun Estate, Majek",
   instagram: "https://instagram.com/angelstreat",
