@@ -1,8 +1,3 @@
-/* =========================================================
-   Angels Treat — LUXURY MAKEUP & BEAUTY STUDIO
-   style.css — Public site stylesheet
-   ========================================================= map-embed*/
-
 /* ---------- 1. DESIGN TOKENS load---------- */
 :root {
   /* Palette */
@@ -79,6 +74,7 @@ body {
   transition:
     background 0.4s var(--ease),
     color 0.4s var(--ease);
+  padding: 10px;
 }
 
 img {
